@@ -4,8 +4,6 @@
 
 extern DWORD entListJmpBack = 0x0;
 
-DWORD EntityObjStart = 0x0;
-
 class playerent
 {
 public:
@@ -33,13 +31,8 @@ __declspec(naked) void entityhook()
 	__asm {
 		mov eax,[esi+0x34]
 		mov ecx,[esi + 0x38]
-		mov EntityObjStart, esi
+		mov entptr, esi
 		pushad
-	}
-
-	__asm {
-		mov eax,EntityObjStart
-		mov entptr, eax
 	}
 
 	if (entptr == nullptr)
