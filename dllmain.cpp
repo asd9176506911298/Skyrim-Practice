@@ -3,6 +3,7 @@
 #include "hook.h"
 #include "hooks_reclass.h"
 #include "draw.h"
+#include "hack.h"
 
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -17,13 +18,40 @@ endScene oEndScene;
 
 extern IDirect3DDevice9* pDevice = nullptr;
 
+Hack* hack;
+
+bool init = false;
+
 HRESULT __stdcall hookEndScene(IDirect3DDevice9* o_pDevice)
 {
     //std::cout << "Hooked" << std::endl;
     if (o_pDevice)
         pDevice = o_pDevice;
 
-    DrawFillRect(25, 25, 100, 100, D3DCOLOR_ARGB(255, 255, 255, 255));
+    if(!init)
+    { 
+        hack = new Hack();
+        hack->Init();
+        init = true;
+    }
+
+
+    hack->Update();
+    
+    for (int i = 0; i < 255; i++)
+    {
+        if(ents[i] != 0)
+        { 
+            Vec2 vScreen;
+            if (hack->WorldToScreen(ents[i]->coords, vScreen))
+            {
+                DrawText(ents[i]->nameptr->name, vScreen.x, vScreen.y, D3DCOLOR_ARGB(255, 255, 0, 0));
+                /*DrawFillRect(vScreen, 5, 5, D3DCOLOR_ARGB(255, 255, 255, 255));*/
+            }
+        }
+    }
+
+    //DrawFillRect(25, 25, 100, 100, D3DCOLOR_ARGB(255, 255, 255, 255));
 
     return oEndScene(pDevice);
 }
@@ -61,6 +89,8 @@ DWORD WINAPI HackThread(HMODULE hModule)
     AllocConsole();
     FILE* f;
     freopen_s(&f, "CONOUT$", "w", stdout);
+
+    
 
     uintptr_t moduleBase = (uintptr_t)GetModuleHandle(0);
     uintptr_t hookAddr = moduleBase + 0x2B5CF0;

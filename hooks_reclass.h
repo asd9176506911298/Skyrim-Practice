@@ -1,6 +1,6 @@
 #pragma once
 #include <Windows.h>
-#include "vec3.h"
+#include "hack.h"
 
 extern DWORD entListJmpBack = 0x0;
 
@@ -10,7 +10,7 @@ public:
 	char pad_0000[36]; //0x0000
 	class nameptrClass* nameptr; //0x0024
 	char pad_0028[12]; //0x0028
-	vec3 coords; //0x0034
+	Vec3 coords; //0x0034
 }; //Size: 0x0040
 
 class nameptrClass
@@ -20,7 +20,7 @@ public:
 	char* name; //0x0088
 }; //Size: 0x008C
 
-playerent* ents[100];
+playerent* ents[255];
 playerent* entptr;
 int index;
 

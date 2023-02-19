@@ -165,15 +165,16 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="draw.cpp" />
+    <ClCompile Include="hack.cpp" />
     <ClCompile Include="hook.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="detours\detours.h" />
     <ClInclude Include="detours\detver.h" />
     <ClInclude Include="draw.h" />
+    <ClInclude Include="hack.h" />
     <ClInclude Include="hook.h" />
     <ClInclude Include="hooks_reclass.h" />
-    <ClInclude Include="vec3.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="detours\detours.pdb" />
