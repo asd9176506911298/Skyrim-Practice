@@ -13,8 +13,8 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="hook">
-      <UniqueIdentifier>{8a0605d2-6837-42c7-b2d3-5be05021d0cf}</UniqueIdentifier>
+    <Filter Include="detours">
+      <UniqueIdentifier>{90529320-ed11-4cd6-961c-79e231bea0c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -22,18 +22,40 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="hook.cpp">
-      <Filter>hook</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="draw.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="hook.h">
-      <Filter>hook</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="hooks_reclass.h">
-      <Filter>hook</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vec3.h">
-      <Filter>hook</Filter>
+    <ClInclude Include="detours\detver.h">
+      <Filter>detours</Filter>
     </ClInclude>
+    <ClInclude Include="detours\detours.h">
+      <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="draw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="detours\detours.pdb">
+      <Filter>detours</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="detours\detours.lib">
+      <Filter>detours</Filter>
+    </Library>
   </ItemGroup>
 </Project>
