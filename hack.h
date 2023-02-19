@@ -24,6 +24,7 @@ public:
 	uintptr_t moduleBase = 0x0;
 	uintptr_t dwViewMatrix = 0x0;
 
+	ID3DXLine* LineL;
 	ID3DXFont* FontF;
 
 	int windowWidth = 1280;

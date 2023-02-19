@@ -8,7 +8,7 @@ void Hack::Init()
 
 void Hack::Update()
 {
-	memcpy(&viewMatrix, (PBYTE*)(0x1BACBC0), sizeof(viewMatrix));
+	memcpy(&viewMatrix, (PBYTE*)(0x1B3EA10), sizeof(viewMatrix));
 }
 
 bool Hack::WorldToScreen(Vec3 pos, Vec2& screen)

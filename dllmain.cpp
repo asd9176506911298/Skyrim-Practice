@@ -46,6 +46,8 @@ HRESULT __stdcall hookEndScene(IDirect3DDevice9* o_pDevice)
             if (hack->WorldToScreen(ents[i]->coords, vScreen))
             {
                 DrawText(ents[i]->nameptr->name, vScreen.x, vScreen.y, D3DCOLOR_ARGB(255, 255, 0, 0));
+                //DrawFillRect(vScreen, 20, 20, D3DCOLOR_ARGB(255, 255, 0, 0));
+                DrawESPBox2D(vScreen, 20, 5, D3DCOLOR_ARGB(255, 255, 0, 0));
                 /*DrawFillRect(vScreen, 5, 5, D3DCOLOR_ARGB(255, 255, 255, 255));*/
             }
         }
