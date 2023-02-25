@@ -3,7 +3,9 @@
 #include "hack.h"
 
 extern DWORD entListJmpBack = 0x0;
-
+extern DWORD noClipJmpBack = 0x0;
+DWORD Axis = 0x0;
+DWORD zAxisPtr = 0x0;
 class playerent
 {
 public:
@@ -20,6 +22,20 @@ public:
 	char* name; //0x0088
 }; //Size: 0x008C
 
+__declspec(naked) void Nocliphook()
+{
+	__asm {
+		mov zAxisPtr, esi
+		mov edx, [edx + 0x78]
+		fld dword ptr[edx + 0xc]
+		pushad
+	}
+
+	__asm {
+		popad
+		jmp [noClipJmpBack]
+	}
+}
 playerent* ents[255];
 playerent* entptr;
 int index;

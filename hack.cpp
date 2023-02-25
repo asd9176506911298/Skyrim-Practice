@@ -19,6 +19,7 @@ bool Hack::WorldToScreen(Vec3 pos, Vec2& screen)
 	clipCoords.z = pos.x * viewMatrix[8] + pos.y * viewMatrix[9] + pos.z * viewMatrix[10] + viewMatrix[11];
 	clipCoords.w = pos.x * viewMatrix[12] + pos.y * viewMatrix[13] + pos.z * viewMatrix[14] + viewMatrix[15];
 
+
 	if (clipCoords.w < 0.01f)
 		return false;
 
