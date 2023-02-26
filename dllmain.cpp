@@ -169,15 +169,14 @@ HRESULT __stdcall hookEndScene(IDirect3DDevice9* o_pDevice)
         uintptr_t wayPointX = 0x1B40298;
         uintptr_t wayPointY = 0x1B4029C;
         uintptr_t wayPointZ = 0x1B402A0;
-        if(*(float*)wayPointX && *(float*)wayPointY && *(float*)wayPointZ)
-        {
-            Axis = zAxisPtr + 0xE0;
-            *(float*)Axis = *(float*)wayPointX / 70;
-            Axis += 0x4;
-            *(float*)Axis = *(float*)wayPointY / 70;
-            Axis += 0x4;
-            *(float*)Axis = *(float*)wayPointZ / 70;
-        }
+
+        Axis = zAxisPtr + 0xE0;
+        *(float*)Axis = *(float*)wayPointX / 70;
+        Axis += 0x4;
+        *(float*)Axis = *(float*)wayPointY / 70;
+        Axis += 0x4;
+        *(float*)Axis = *(float*)wayPointZ / 70;
+
     }
 
     //DrawFillRect(25, 25, 100, 100, D3DCOLOR_ARGB(255, 255, 255, 255));
