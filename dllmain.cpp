@@ -23,6 +23,9 @@ BYTE NoClipByte[6]{};
 
 extern IDirect3DDevice9* pDevice = nullptr;
 
+uintptr_t gravity = 0x12D65B4;
+uintptr_t godMode = 0x1B398C4;
+
 Hack* hack;
 
 bool init = false;
@@ -45,12 +48,11 @@ HRESULT __stdcall hookEndScene(IDirect3DDevice9* o_pDevice)
         hack = new Hack();
         hack->Init();
         init = true;
-        std::cout << ents[0] << std::endl;
     }
 
 
     hack->Update();
-    
+    std::cout << ents[0] << std::endl;
     for (int i = 0; i < 255; i++)
     {
         if(ents[i] != 0)
@@ -71,7 +73,7 @@ HRESULT __stdcall hookEndScene(IDirect3DDevice9* o_pDevice)
             }
         }
     }
-    float noclipSpeed = 0.02f;
+    float noclipSpeed = 0.05f;
     if (GetAsyncKeyState(VK_F1) & 1)
         noclip = !noclip;
 
@@ -79,6 +81,9 @@ HRESULT __stdcall hookEndScene(IDirect3DDevice9* o_pDevice)
 
     if(noclip)
     {
+        *(float*)gravity = 0;
+        *(short*)godMode = 256;
+
         relx = 0.0f;
         rely = 0.0f;
         relz = 0.0f;
@@ -86,23 +91,28 @@ HRESULT __stdcall hookEndScene(IDirect3DDevice9* o_pDevice)
         Axis = zAxisPtr + 0xE8;
         if (GetAsyncKeyState(VK_SPACE))
         {
-            *(float*)Axis += 0.02;
+            *(float*)Axis += 0.1;
         }
 
-        if (GetAsyncKeyState(VK_NUMPAD6))
+        if (GetAsyncKeyState(VK_SHIFT))
+        {
+            *(float*)Axis -= 0.1;
+        }
+
+        if (GetAsyncKeyState(VK_RIGHT))
         {
             relx += noclipSpeed;
         }
-        if (GetAsyncKeyState(VK_NUMPAD4))
+        if (GetAsyncKeyState(VK_LEFT))
         {
             relx -= noclipSpeed;
         }
 
-        if (GetAsyncKeyState(VK_NUMPAD8))
+        if (GetAsyncKeyState(VK_UP))
         {
             relz += noclipSpeed;
         }
-        if (GetAsyncKeyState(VK_NUMPAD2))
+        if (GetAsyncKeyState(VK_DOWN))
         {
             relz -= noclipSpeed;
         }
@@ -116,8 +126,29 @@ HRESULT __stdcall hookEndScene(IDirect3DDevice9* o_pDevice)
         *(float*)Axis += newx;
         Axis += 0x4;
         *(float*)Axis += newy;
-        //Axis += 0x4;
-        //*(float*)Axis += newz;
+        Axis += 0x4;
+        *(float*)Axis += newz;
+    }
+    else
+    {
+        *(float*)gravity = 1.350000024;
+        *(short*)godMode = 256;
+    }
+
+    if (GetAsyncKeyState(VK_F2) & 1)
+    {
+        uintptr_t wayPointX = 0x1B40298;
+        uintptr_t wayPointY = 0x1B4029C;
+        uintptr_t wayPointZ = 0x1B402A0;
+        if(*(float*)wayPointX && *(float*)wayPointY && *(float*)wayPointZ)
+        {
+            Axis = zAxisPtr + 0xE0;
+            *(float*)Axis = *(float*)wayPointX / 70;
+            Axis += 0x4;
+            *(float*)Axis = *(float*)wayPointY / 70;
+            Axis += 0x4;
+            *(float*)Axis = *(float*)wayPointZ / 70;
+        }
     }
 
     //DrawFillRect(25, 25, 100, 100, D3DCOLOR_ARGB(255, 255, 255, 255));
