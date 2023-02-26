@@ -37,6 +37,34 @@ float calculateDistance(Vec3 pos)
     return sqrt(pow(ents[0]->coords.x - pos.x, 2) + pow(ents[0]->coords.y - pos.y, 2) + pow(ents[0]->coords.z - pos.z, 2));
 }
 
+Vec2 GetBonePos2D(playerent* ent, int boneid)
+{
+    Vec2 vBonePos;
+    if (hack->WorldToScreen(ent->boneptr1->boneptr2->boneptr3->boneArray[boneid].coords, vBonePos))
+        return vBonePos;
+}
+
+void DrawBone(int index)
+{
+    //head
+    DrawLine(GetBonePos2D(ents[index], 30), GetBonePos2D(ents[index], 29), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+    DrawLine(GetBonePos2D(ents[index], 29), GetBonePos2D(ents[index], 0), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+    //left arm
+    DrawLine(GetBonePos2D(ents[index], 29), GetBonePos2D(ents[index], 57), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+    DrawLine(GetBonePos2D(ents[index], 57), GetBonePos2D(ents[index], 35), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+    DrawLine(GetBonePos2D(ents[index], 35), GetBonePos2D(ents[index], 36), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+    //right arm
+    DrawLine(GetBonePos2D(ents[index], 29), GetBonePos2D(ents[index], 31), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+    DrawLine(GetBonePos2D(ents[index], 31), GetBonePos2D(ents[index], 62), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+    DrawLine(GetBonePos2D(ents[index], 62), GetBonePos2D(ents[index], 63), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+    //left leg
+    DrawLine(GetBonePos2D(ents[index], 0), GetBonePos2D(ents[index], 7), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+    DrawLine(GetBonePos2D(ents[index], 7), GetBonePos2D(ents[index], 8), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+    //right leg
+    DrawLine(GetBonePos2D(ents[index], 0), GetBonePos2D(ents[index], 3), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+    DrawLine(GetBonePos2D(ents[index], 3), GetBonePos2D(ents[index], 4), 1, D3DCOLOR_ARGB(255, 255, 0, 0));
+}
+
 HRESULT __stdcall hookEndScene(IDirect3DDevice9* o_pDevice)
 {
     //std::cout << "Hooked" << std::endl;
@@ -46,7 +74,6 @@ HRESULT __stdcall hookEndScene(IDirect3DDevice9* o_pDevice)
     if(!init)
     { 
         hack = new Hack();
-        hack->Init();
         init = true;
     }
 
@@ -61,17 +88,19 @@ HRESULT __stdcall hookEndScene(IDirect3DDevice9* o_pDevice)
             if (calculateDistance(ents[i]->coords) > 4000 || i == 0)
                 continue;
 
-            if (hack->WorldToScreen(ents[i]->coords, vScreen))
-            {
-                std::string s = std::to_string(i);
-                char const* pchar = s.c_str();
-                //DrawText(ents[i]->nameptr->name, vScreen.x, vScreen.y, D3DCOLOR_ARGB(255, 255, 0, 0));
-                DrawText(pchar, vScreen.x, vScreen.y, D3DCOLOR_ARGB(255, 255, 0, 0));
-                //DrawFillRect(vScreen, 20, 20, D3DCOLOR_ARGB(255, 255, 0, 0));
-                DrawESPBox2D(vScreen, 20, 5, D3DCOLOR_ARGB(255, 255, 0, 0));
-                /*DrawFillRect(vScreen, 5, 5, D3DCOLOR_ARGB(255, 255, 255, 255));*/
-            }
+            //if (hack->WorldToScreen(ents[i]->coords, vScreen))
+            //{
+            //    std::string s = std::to_string(i);
+            //    char const* pchar = s.c_str();
+            //    //DrawText(ents[i]->nameptr->name, vScreen.x, vScreen.y, D3DCOLOR_ARGB(255, 255, 0, 0));
+            //    //DrawText(pchar, vScreen.x, vScreen.y, D3DCOLOR_ARGB(255, 255, 0, 0));
+            //    //DrawESPBox2D(vScreen, 20, 5, D3DCOLOR_ARGB(255, 255, 0, 0));
+            //}
+
+            DrawBone(i);
+
         }
+      
     }
     float noclipSpeed = 0.05f;
     if (GetAsyncKeyState(VK_F1) & 1)

@@ -1,11 +1,5 @@
 #include "hack.h"
 
-void Hack::Init()
-{
-	moduleBase = (uintptr_t)GetModuleHandle(0);
-	dwViewMatrix = moduleBase + 0x179C260;
-}
-
 void Hack::Update()
 {
 	memcpy(&viewMatrix, (PBYTE*)(0x1B3EA10), sizeof(viewMatrix));
@@ -20,7 +14,7 @@ bool Hack::WorldToScreen(Vec3 pos, Vec2& screen)
 	clipCoords.w = pos.x * viewMatrix[12] + pos.y * viewMatrix[13] + pos.z * viewMatrix[14] + viewMatrix[15];
 
 
-	if (clipCoords.w < 0.01f)
+	if (clipCoords.w < 0.1f)
 		return false;
 
 	Vec3 NDC;

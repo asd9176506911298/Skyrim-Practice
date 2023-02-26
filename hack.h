@@ -31,7 +31,6 @@ public:
 	int windowHeight = 720;
 	float viewMatrix[16];
 
-	void Init();
 	void Update();
 	bool WorldToScreen(Vec3 pos, Vec2& screen);
 };

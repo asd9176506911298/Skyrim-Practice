@@ -13,7 +13,13 @@ public:
 	class nameptrClass* nameptr; //0x0024
 	char pad_0028[12]; //0x0028
 	Vec3 coords; //0x0034
-}; //Size: 0x0040
+	char pad_0040[280]; //0x0040
+	float health; //0x0158
+	char pad_015C[20]; //0x015C
+	float stamina; //0x0170
+	char pad_0174[20]; //0x0174
+	class boneptr1class* boneptr1; //0x0188
+}; //Size: 0x018C
 
 class nameptrClass
 {
@@ -21,6 +27,35 @@ public:
 	char pad_0000[136]; //0x0000
 	char* name; //0x0088
 }; //Size: 0x008C
+
+class boneptr1class
+{
+public:
+	char pad_0000[4]; //0x0000
+	class boneptr2class* boneptr2; //0x0004
+}; //Size: 0x0008
+
+class boneptr2class
+{
+public:
+	char pad_0000[192]; //0x0000
+	class boneptr3class* boneptr3; //0x00C0
+}; //Size: 0x00C4
+
+class boneClass
+{
+public:
+	char pad_0000[88]; //0x0000
+	Vec3 coords; //0x0058
+	char pad_0064[16]; //0x0064
+	char* nameptr; //0x0074
+}; //Size: 0x00780x78);
+
+class boneptr3class
+{
+public:
+	class boneClass boneArray[80]; //0x0000
+}; //Size: 0x04B0
 
 __declspec(naked) void Nocliphook()
 {
